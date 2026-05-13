@@ -1,3 +1,4 @@
+{%- set enable_thinking = true %}
 {%- macro format_parameters(properties, required) -%}
     {%- set standard_keys = ['description', 'type', 'properties', 'required', 'nullable'] -%}
     {%- set ns = namespace(found_first=false) -%}
@@ -136,7 +137,7 @@
             :{{- format_argument(value, escape_keys=escape_keys) -}}
         {%- endfor -%}
         {{- '}' -}}
-    {%- elif argument is sequence -%}
+    {%- elif argument is iterable and argument is not string and argument is not mapping -%}
         {{- '[' -}}
         {%- for item in argument -%}
             {{- format_argument(item, escape_keys=escape_keys) -}}
